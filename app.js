@@ -3,6 +3,7 @@ let fs = require('fs');
 
 let counter =0;
 let counterPrice=0;
+let counterPriceUnic=0;
 
 http.createServer(function(request, response){
 
@@ -17,6 +18,7 @@ http.createServer(function(request, response){
 
     switch(newUrl) {
         case '/index':
+            counterPrice=0;
             fs.readFile('index.html', "utf8", function(error, data){
                 if(error){
                     response.statusCode = 404;
@@ -33,14 +35,15 @@ http.createServer(function(request, response){
             });
             break;
         case '/price.zip':
-
             counterPrice++;
 
-
-            console.log(counterPrice);
-            let price = `файл скачен ${counterPrice} раз`;
-            fs.writeFile('1.txt', price);
-
+            if (counterPrice == 1){
+                counterPriceUnic++;
+                console.log(counterPrice);
+                console.log(counterPriceUnic);
+                let price = `файл скачен ${counterPriceUnic} раз`;
+                fs.writeFile('1.txt', price);
+            }
             break;
         default:
             loadPage('404');
